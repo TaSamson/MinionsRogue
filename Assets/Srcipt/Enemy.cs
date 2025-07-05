@@ -9,7 +9,7 @@ public class SphereCombatSetup : MonoBehaviour
     [Header("Desired distance between spheres")]
     public float combatDistance = 3f;
 
-    public GameObject test;
+    public GameObject Proute;
 
     void Start()
     {
@@ -19,7 +19,7 @@ public class SphereCombatSetup : MonoBehaviour
             return;
         }
 
-        // Calcul direction de B par rapport à A
+        // Calcul direction de B par rapport ï¿½ A
         Vector3 direction = sphereB.position - sphereA.position;
 
         if (direction.magnitude == 0)
@@ -32,12 +32,12 @@ public class SphereCombatSetup : MonoBehaviour
             direction.Normalize();
         }
 
-        // Nouvelle position de B à la distance souhaitée
+        // Nouvelle position de B ï¿½ la distance souhaitï¿½e
         sphereB.position = sphereA.position + direction * combatDistance;
     }
 
     private void Update()
     {
-        Instantiate(test);
+        Instantiate(Proute);
     }
 }
