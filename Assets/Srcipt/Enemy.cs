@@ -38,6 +38,5 @@ public class SphereCombatSetup : MonoBehaviour
 
     private void Update()
     {
-        Instantiate(Proute);
     }
 }
