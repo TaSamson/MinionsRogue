@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b315c37b8e8df6f41af87e8a6a7328f5, type: 3}
+  m_Name: Hero_Tank_Basic
+  m_EditorClassIdentifier: 
+  heroName: Bob
+  role: 0
+  prefab: {fileID: 0}
+  maxHealth: 50
+  baseAttack: 4
+  speed: 3
+  summonPoints: 4
+  startingMinions:
+  - {fileID: 11400000, guid: 69409c7979774ca4a8db4eef7bddd17d, type: 2}
+  - {fileID: 11400000, guid: 637bd373995bd0c4ea80c8cda3170fe6, type: 2}
+  - {fileID: 11400000, guid: a032b29923d88274785a0288bfa93d2c, type: 2}
+  - {fileID: 11400000, guid: 1a6529a911be4d243b0014401290f4ec, type: 2}
+  abilityName: 
+  abilityDescription: 

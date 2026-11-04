@@ -3,6 +3,8 @@ using UnityEngine.UI;
 using TMPro;
 using System;
 
+public enum RoomCellState { Empty, Hidden, Visited, Reachable, Current }
+
 [RequireComponent(typeof(Button))]
 public class RoomCellView : MonoBehaviour
 {
@@ -11,32 +13,57 @@ public class RoomCellView : MonoBehaviour
 
     private RoomNode room;
     private Action<RoomNode> onClicked;
+    private bool clickable;
 
     private void Awake()
     {
         GetComponent<Button>().onClick.AddListener(HandleClick);
     }
 
-    public void Setup(RoomNode room, Action<RoomNode> onClicked)
+    public void Setup(RoomNode room, RoomCellState state, Action<RoomNode> onClicked)
     {
         this.room = room;
         this.onClicked = onClicked;
+        clickable = state == RoomCellState.Reachable;
 
-        if (room == null)
+        switch (state)
         {
-            background.color = new Color(0.2f, 0.2f, 0.2f, 0.4f);
-            label.text = "";
-            GetComponent<Button>().interactable = false;
-            return;
-        }
+            case RoomCellState.Empty:
+                background.color = new Color(0.2f, 0.2f, 0.2f, 0.4f);
+                label.text = "";
+                break;
 
-        background.color = GetColor(room.Type);
-        label.text = GetSymbol(room.Type);
+            case RoomCellState.Hidden:
+                background.color = new Color(0.25f, 0.25f, 0.25f, 1f);
+                label.text = "?";
+                break;
+
+            case RoomCellState.Visited:
+                background.color = Dim(GetColor(room.Type), 0.45f);
+                label.text = GetSymbol(room.Type);
+                break;
+
+            case RoomCellState.Reachable:
+                background.color = GetColor(room.Type);
+                label.text = GetSymbol(room.Type);
+                break;
+
+            case RoomCellState.Current:
+                background.color = GetColor(room.Type);
+                label.text = "YOU";
+                break;
+        }
     }
 
     private void HandleClick()
     {
-        if (room != null) onClicked?.Invoke(room);
+        if (clickable && room != null) onClicked?.Invoke(room);
+    }
+
+    // On n'utilise pas Color * float : ça multiplierait aussi l'alpha
+    private Color Dim(Color c, float factor)
+    {
+        return new Color(c.r * factor, c.g * factor, c.b * factor, 1f);
     }
 
     private Color GetColor(RoomType type)

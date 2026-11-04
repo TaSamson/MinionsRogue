@@ -9,7 +9,7 @@ public class FloorMapView : MonoBehaviour
 
     public event Action<RoomNode> OnRoomClicked;
 
-    public void Display(FloorGrid grid)
+    public void Display(FloorGrid grid, RoomNode currentRoom)
     {
         foreach (Transform child in gridLayout.transform)
             Destroy(child.gameObject);
@@ -22,14 +22,22 @@ public class FloorMapView : MonoBehaviour
             {
                 var room = grid.GetRoom(x, y);
                 var cell = Instantiate(roomCellPrefab, gridLayout.transform);
-                cell.Setup(room, HandleRoomClicked);
+                cell.Setup(room, GetState(room, currentRoom), HandleRoomClicked);
             }
         }
     }
 
+    private RoomCellState GetState(RoomNode room, RoomNode currentRoom)
+    {
+        if (room == null) return RoomCellState.Empty;
+        if (room == currentRoom) return RoomCellState.Current;
+        if (currentRoom.IsConnectedTo(room)) return RoomCellState.Reachable;
+        if (room.Visited) return RoomCellState.Visited;
+        return RoomCellState.Hidden;
+    }
+
     private void HandleRoomClicked(RoomNode room)
     {
-        Debug.Log($"Salle cliquée : ({room.X},{room.Y}) - {room.Type}");
         OnRoomClicked?.Invoke(room);
     }
 }

@@ -16,4 +16,14 @@ public class RoomNode
         Y = y;
         Type = type;
     }
+
+    public bool IsConnectedTo(RoomNode other)
+    {
+        foreach (var dir in Connections)
+        {
+            var o = dir.ToOffset();
+            if (X + o.x == other.X && Y + o.y == other.Y) return true;
+        }
+        return false;
+    }
 }
